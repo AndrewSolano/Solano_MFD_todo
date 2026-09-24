@@ -1,6 +1,23 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h1>Hello, world!</h1>
-  <p>This content is coming directly from home.html and using the navbar from base.html!</p>
+    <h1>welcome to the homepage!</h1>
+    <p>Today is {{ date_today }}</p>
+
+    {% if all_items %}
+        <table class="table table-bordered">
+            {% for things in all_items %}
+                <tr>
+                    {% if things.completed %}
+                        <td><s>{{ things.item }}</s></td>
+                        <td><center><a href="{% url 'unstrike' things.id %}">Unstrike</a></center></td>
+                    {% else %}
+                        <td>{{ things.item }}</td>
+                        <td><center><a href="{% url 'strike' things.id %}">Strike</a></center></td>
+                    {% endif %}
+                    <td><center><a href="{% url 'delete' things.id %}">Delete</a></center></td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
 {% endblock %}
